@@ -1,0 +1,9 @@
+space = jump;
+lftshift = sprint;
+lftcontrol = control;
+r = grapplecreate;
+q = grappleattach;
+leftclick = swordAtk;
+rightclick = tryparry;
+e = interact;
+f = shoot;
