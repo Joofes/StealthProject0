@@ -117,19 +117,19 @@ public class PlayerMovementTutorial : MonoBehaviour
         StateHandler();
         GrappleCheck();
         GrappleHandler();
-        if (isWallRunning && rb.velocity.magnitude <= wallRunMinSpeed)
+        if (isWallRunning && rb.linearVelocity.magnitude <= wallRunMinSpeed)
             StopWallRun();
         // handle drag
         if (jumping)
-            rb.drag = 0;
+            rb.linearDamping = 0;
         if (grounded && verticalInput == 0 && horizontalInput == 0 && !jumping)
         {
-            rb.drag = 200;
+            rb.linearDamping = 200;
         }
         else if (grounded)
-            rb.drag = groundDrag;
+            rb.linearDamping = groundDrag;
         else
-            rb.drag = 0;
+            rb.linearDamping = 0;
         if(isWallRunning)
         {
             wallRunTimer -= Time.deltaTime;
@@ -215,7 +215,7 @@ public class PlayerMovementTutorial : MonoBehaviour
 
             Vector3 verticalVelocity = Vector3.up * verticalInput * grappleMoveSpeed;
 
-            rb.velocity = verticalVelocity;
+            rb.linearVelocity = verticalVelocity;
             //stop grapple
             if (Input.GetKeyDown(grappleKey) && grappled)
             {
@@ -320,7 +320,7 @@ public class PlayerMovementTutorial : MonoBehaviour
         {
             rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
 
-            if (rb.velocity.y > 0)
+            if (rb.linearVelocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
 
@@ -342,20 +342,20 @@ public class PlayerMovementTutorial : MonoBehaviour
         // limiting speed on slope
         if (OnSlope() && !exitingSlope)
         {
-            if (rb.velocity.magnitude > moveSpeed)
-                rb.velocity = rb.velocity.normalized * moveSpeed;
+            if (rb.linearVelocity.magnitude > moveSpeed)
+                rb.linearVelocity = rb.linearVelocity.normalized * moveSpeed;
         }
 
         // limiting speed on ground or in air
         else
         {
-            Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
             // limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
                 Vector3 limitedVel = flatVel.normalized * moveSpeed;
-                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+                rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
     }
@@ -366,7 +366,7 @@ public class PlayerMovementTutorial : MonoBehaviour
         exitingSlope = true;
 
         // reset y velocity
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
 
         if(!isWallRunning)
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -423,11 +423,11 @@ public class PlayerMovementTutorial : MonoBehaviour
 
     void WallRunInput()
     {
-        if(Input.GetKeyDown(KeyCode.D) && isWallRight && rb.velocity.magnitude > wallRunMinSpeed && !grounded && wallRunReset)
+        if(Input.GetKeyDown(KeyCode.D) && isWallRight && rb.linearVelocity.magnitude > wallRunMinSpeed && !grounded && wallRunReset)
         {
             StartWallRun();
         }
-        if (Input.GetKeyDown(KeyCode.A) && isWallLeft && rb.velocity.magnitude > wallRunMinSpeed && !grounded && wallRunReset)
+        if (Input.GetKeyDown(KeyCode.A) && isWallLeft && rb.linearVelocity.magnitude > wallRunMinSpeed && !grounded && wallRunReset)
         {
             StartWallRun();
         }
@@ -437,10 +437,10 @@ public class PlayerMovementTutorial : MonoBehaviour
         wallRunReset = false;
         wallRunTimer = wallRunTime;
         rb.useGravity = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         isWallRunning = true;
 
-        if (rb.velocity.magnitude <= wallRunMaxSpeed)
+        if (rb.linearVelocity.magnitude <= wallRunMaxSpeed)
         {
             rb.AddForce(orientation.forward * Time.deltaTime * wallrunForce);
 

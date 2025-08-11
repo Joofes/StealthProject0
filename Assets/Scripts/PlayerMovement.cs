@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     RaycastHit hit;
 
+    PlayerStats stats;
+
     public Transform cameraFollow;
 
     public States state;
@@ -51,12 +53,13 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         control = GetComponent<CharacterController>();
+        stats = GetComponent<PlayerStats>();
     }
 
     private void Update()
     {
-        if(Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer) || Physics.Raycast(transform.position, Vector3.down, 1.2f, roofLayer))
-            grounded = true;    
+        if (Physics.Raycast(transform.position, Vector3.down, 1.2f, groundLayer) || Physics.Raycast(transform.position, Vector3.down, 1.2f, roofLayer))
+            grounded = true;
         else
             grounded = false;
         if(!grappled)
@@ -153,9 +156,10 @@ public class PlayerMovement : MonoBehaviour
 
     void GrappleHandler()
     {
-        if (Input.GetKeyDown(grappleKey) && !grappled)
+        if (Input.GetKeyDown(grappleKey) && !grappled && stats.ropeAmnt > 0 && Physics.Raycast(transform.position, gameObject.transform.up, grappleLength, roofLayer))
         {
             CreateRope();
+            stats.ropeAmnt--;
         }
         if (grappled)
         {

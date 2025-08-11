@@ -39,12 +39,12 @@ public class Enemy : MonoBehaviour, EnemyClass
 
     private void Start()
     {
-        path.GetComponent<NavMeshEnemyPath>();
+        path = GetComponent<NavMeshEnemyPath>();
         agent = GetComponent<NavMeshAgent>();
         fov = GetComponent<FieldOfView>();
         path.idle = true;
         detectionSlider = GetComponentInChildren<Slider>();
-        player = FindObjectOfType<PlayerMovement>().gameObject;
+        player = FindAnyObjectByType<PlayerMovement>().gameObject;
         detectionSlider = GetComponentInChildren<Slider>();
         detectionSlider.maxValue = detectionLimit;
         parryIndicator.SetActive(false);

@@ -76,7 +76,16 @@ public class PlayerSwordSwing : MonoBehaviour
         {
             foreach (Collider hit in enemiesHit)
             {
-                    hit.GetComponent<Enemy>().TakeHit(swordDamage);
+                Enemy enemy = hit.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeHit(swordDamage);
+                }
+                else
+                {
+                    Dummy dummy = hit.GetComponent<Dummy>();
+                    dummy.TakeHit(swordDamage);
+                }
             }
         }
         //yield return new WaitForSeconds(0.2f);

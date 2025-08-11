@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: SmokeBombSO
   m_EditorClassIdentifier: 
   id: 1
-  count: 89
-  unlocked: 1
+  count: 88
+  unlocked: 0
   projectileName: SmokeBomb
   prefab: {fileID: 226103386879288212, guid: 3737d392882fbf041bffbeb871d74fcd, type: 3}
   refreshTimer: 1
-  currentTimer: -6.779994
+  currentTimer: -36.660645
   throwForce: 15

@@ -12,7 +12,7 @@ public class MissionStand : MonoBehaviour, IInteractable
 
     PlayerStats stats;
     void Awake(){
-        stats = FindObjectOfType<PlayerStats>();
+        stats = FindFirstObjectByType<PlayerStats>();
     }
     public bool Interact(InteractSystem interactor)
     {

@@ -20,7 +20,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void Start()
     {
-        stats = FindObjectOfType<PlayerStats>();
+        stats = FindFirstObjectByType<PlayerStats>();
         vg = volume.profile.GetSetting<Vignette>();
         foreach(ProjectileSO projectile in  stats.projectiles)
         {
