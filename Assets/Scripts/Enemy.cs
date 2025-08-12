@@ -209,7 +209,8 @@ public class Enemy : MonoBehaviour, EnemyClass
         parryIndicator.SetActive(false);
         yield return new WaitForSeconds(3f);
         stun = false;
-        anim.ResetTrigger("Stun");
+        if(anim != null)
+            anim.ResetTrigger("Stun");
         canAtk = true;
     }
 
