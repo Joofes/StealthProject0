@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour, EnemyClass
             Destroy(gameObject);
             return;
         }
-        if(fov.canSeeRope && !stun)
+        if (fov.canSeeRope && !stun && fov.rope != null)
         {
             ropeChasing = true;
             path.idle = false;
